@@ -4,19 +4,19 @@ Thanks for your interest in contributing to Umami! This document outlines the pr
 
 ## Branching
 
-Umami uses the following long-lived branches:
+The PlaybookMediaLLC fork uses the following long-lived branches:
 
-- `master` — stable, released code. **Do not open PRs against `master`.**
-- `dev` — active development. **All pull requests should target `dev`.**
+- `main` — stable, released code. **Do not open PRs against `main`.**
+- `develop` — active development. **All pull requests should target `develop`.**
 
-Feature branches and fixes are merged into `dev`, and `dev` is periodically merged into `master` for releases.
+Feature branches and fixes are merged into `develop`, and `develop` is periodically merged into `main` for releases.
 
 ## Submitting a Pull Request
 
-1. Fork the repository and create your branch from `dev`:
+1. Fork the repository and create your branch from `develop`:
    ```bash
-   git checkout dev
-   git pull origin dev
+   git checkout develop
+   git pull origin develop
    git checkout -b my-feature
    ```
 2. Make your changes. Keep PRs focused — one logical change per PR.
@@ -26,10 +26,10 @@ Feature branches and fixes are merged into `dev`, and `dev` is periodically merg
    pnpm build
    pnpm lint
    ```
-4. Push your branch and open a pull request **against the `dev` branch**.
+4. Push your branch and open a pull request **against the `develop` branch**.
 5. Fill in the PR description with what changed and why. Link any related issues.
 
-PRs opened against `master` will be asked to retarget `dev`.
+PRs opened against `main` will be asked to retarget `develop`.
 
 ## Reporting Issues
 
