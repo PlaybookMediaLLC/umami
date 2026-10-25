@@ -1,6 +1,9 @@
 name: Node.js CI
 
-on: [push]
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
 
 env:
   DATABASE_URL: "postgresql://user:pass@localhost:5432/dummy"
@@ -8,8 +11,7 @@ env:
 
 jobs:
   build:
-    if: github.repository == 'umami-software/umami'
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +22,7 @@ jobs:
       - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.23.4
           cache: "pnpm"
       - run: pnpm install
       - run: pnpm openapi:generate
@@ -30,3 +32,18 @@ jobs:
       - run: pnpm test
       - run: pnpm test:packages
       - run: pnpm build
+
+  ci-validation:
+    name: CI validation
+    if: always()
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every validation job to pass
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          test -n "$RESULTS"
+          for result in $RESULTS; do
+            test "$result" = success || exit 1
+          done
